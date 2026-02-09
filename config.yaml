@@ -1,0 +1,72 @@
+# AI Memory System Configuration
+
+# Memory Storage Settings
+storage:
+  vector_db_path: "./data/vector_store"
+  metadata_db_path: "./data/memory.db"
+  max_memories_per_user: 10000
+  
+# Embedding Settings
+embeddings:
+  model: "sentence-transformers/all-MiniLM-L6-v2"  # Fast, good quality
+  # Alternative: "text-embedding-ada-002" for OpenAI
+  dimension: 384
+  
+# Memory Extraction
+extraction:
+  llm_provider: "anthropic"  # or "openai"
+  model: "claude-sonnet-4-20250514"
+  temperature: 0.1
+  max_facts_per_turn: 10
+  
+# Memory Retrieval
+retrieval:
+  top_k: 5  # Number of memories to retrieve
+  similarity_threshold: 0.7  # Minimum similarity score
+  recency_weight: 0.3  # Weight for recent memories (0-1)
+  importance_weight: 0.4  # Weight for important memories (0-1)
+  relevance_weight: 0.3  # Weight for semantic relevance (0-1)
+  
+# Memory Categories
+categories:
+  - preferences
+  - commitments
+  - relationships
+  - constraints
+  - instructions
+  - context
+  - personal_info
+  
+# Time Decay Settings
+time_decay:
+  enabled: true
+  half_life_days: 30  # Memories lose half importance after 30 days
+  min_importance: 0.1  # Minimum importance score
+  
+# Memory Consolidation
+consolidation:
+  enabled: true
+  interval_hours: 24
+  merge_similarity_threshold: 0.9
+  
+# Forgetting Mechanism
+forgetting:
+  enabled: true
+  auto_cleanup_days: 180  # Remove very old, unimportant memories
+  min_access_count: 2  # Memories accessed less than this may be forgotten
+  
+# Privacy Settings
+privacy:
+  encrypt_storage: false
+  allow_export: true
+  allow_deletion: true
+  
+# API Keys (use environment variables in production)
+api_keys:
+  anthropic_api_key: ${ANTHROPIC_API_KEY}
+  openai_api_key: ${OPENAI_API_KEY}
+  
+# Logging
+logging:
+  level: "INFO"
+  log_file: "./logs/memory_system.log"
